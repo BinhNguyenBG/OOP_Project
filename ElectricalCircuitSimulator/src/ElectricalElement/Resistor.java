@@ -11,9 +11,9 @@ public class Resistor extends ElectricalElement{
 		super.setName(rName);
 	}
 	
-	public Resistor(Complex resistance) {
+	public Resistor(double resistance) {
 		this();
-		super.setResistance(resistance);
+		super.setResistance(new Complex(resistance, 0));
 	}
 	
 	public String toString() {
