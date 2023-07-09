@@ -1,7 +1,7 @@
 package ElectricalElement;
 
 import org.apache.commons.math3.complex.*;
-
+ 
 public class TestElement {
 
 	public TestElement() {
@@ -10,8 +10,7 @@ public class TestElement {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Complex z = new Complex(1, 0);
-		Resistor r = new Resistor(z);
+		Resistor r = new Resistor(1);
 		Inductor l = new Inductor(2);
 		System.out.println(r.getName());
 		System.out.println(l.getName());

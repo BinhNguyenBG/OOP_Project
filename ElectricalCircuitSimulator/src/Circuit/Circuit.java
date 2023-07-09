@@ -23,7 +23,7 @@ public abstract class Circuit {
 		return elements;
 	}
 	
-	public void setVoltageSource(VoltageSource src) {
+	public void addVoltageSource(VoltageSource src) {
 		this.src = src;
 	}
 	
