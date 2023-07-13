@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
@@ -9,6 +10,7 @@ import java.awt.Stroke;
 import Circuit.Circuit;
 import Circuit.SerialCircuit;
 import ElectricalElement.Capacitor;
+import java.text.DecimalFormat;
 
 public class CapacitorGUI extends ElementGUI{
 	private Capacitor capacitor;
@@ -66,6 +68,17 @@ public class CapacitorGUI extends ElementGUI{
             	g2d.drawLine(endX_4, endY_4, endX_5, endY_5);
             }
             
+            //draw String:
+            g2d.setFont(new Font("Arial", Font.BOLD,30));
+            g2d.drawString(this.capacitor.getName(), endX_1 + 7, endY_1-85);
+            Double capacitance = this.capacitor.getCapacitance()/1e-6;
+            if (Math.floor(capacitance) == Math.round(capacitance)) {
+            	g2d.drawString((int) Math.round(capacitance)+" μF", endX_1-8, endY_1-50);
+            } else {
+            	DecimalFormat df = new DecimalFormat("###.#");
+            	g2d.drawString(df.format(capacitance) + " μF", endX_1-8, endY_1-50);
+            }
+            
     	} else {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setColor(Color.BLACK);
@@ -100,6 +113,17 @@ public class CapacitorGUI extends ElementGUI{
             
             g2d.drawLine(startX_1, startY_1, endX_1-200, startY_1);
             g2d.drawLine(startX_1, endY_4, endX_4-200, endY_4);
+            
+            //draw String:
+            g2d.setFont(new Font("Arial", Font.BOLD,30));
+            g2d.drawString(this.capacitor.getName(), endX_1 + 55, 170);
+            Double capacitance = this.capacitor.getCapacitance()/1e-6;
+            if (Math.floor(capacitance) == Math.round(capacitance)) {
+            	g2d.drawString((int) Math.round(capacitance)+" μF", endX_1 + 55, 210);
+            } else {
+            	DecimalFormat df = new DecimalFormat("###.#");
+            	g2d.drawString(df.format(capacitance) + " μF", endX_1 + 55, 210);
+            }
     	}
     }
 }

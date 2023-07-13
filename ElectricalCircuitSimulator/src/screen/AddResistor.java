@@ -12,6 +12,9 @@ public class AddResistor extends AddComponent{
 		this.getUnit().addItem("Ω");
 		this.getUnit().addItem("kΩ");
 		this.getUnit().addItem("MΩ");
+		this.getUnit().addItem("GΩ");
+		this.getUnit().addItem("mΩ");
+		this.getUnit().addItem("µΩ");
 		
 		this.construct();
 	}

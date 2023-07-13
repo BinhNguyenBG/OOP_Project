@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
@@ -32,6 +33,10 @@ public class DCGUI extends ElementGUI{
             g2d.drawLine(50+((250*super.getSeed()-150)/2)+26+18, 400-18, 50+((250*super.getSeed()-150)/2)+26+18, 400+18);
             g2d.drawLine(50+((250*super.getSeed()-150)/2)+26+36+26, 400, 50+((250*super.getSeed()-150)/2)+26+36+26+36, 400);
             
+          //Draw String:
+            g2d.setFont(new Font("Arial", Font.BOLD,30));
+    		g2d.drawString((int) dc.getVoltage()+ " V",50+((250*super.getSeed()-150)/2)+40,330); 
+            
     	} else {
             Graphics2D g2d = (Graphics2D) g;
             g2d.setColor(Color.BLACK);
@@ -44,6 +49,10 @@ public class DCGUI extends ElementGUI{
             g2d.drawLine(200, 100+26, 200, 100+26+36);
             g2d.drawLine(200+18, 100+26+18, 200-18, 100+26+18);
             g2d.drawLine(200, 100+26+36+26, 200, 100+26+36+26+36);
+            
+          //Draw String:
+            g2d.setFont(new Font("Arial", Font.BOLD,30));
+    		g2d.drawString((int) dc.getVoltage()+ " V",260,190); 
     	}
                        
 

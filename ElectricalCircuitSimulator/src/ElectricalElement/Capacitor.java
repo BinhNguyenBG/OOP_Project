@@ -10,9 +10,10 @@ public class Capacitor extends ElectricalElement{
 		super.setName(cName);
 	}
 	
-	public Capacitor(double capacitance) {
+	public Capacitor(double capacitance, String unit) {
 		this();
 		this.capacitance = capacitance;
+		this.setUnit(unit);
 	}
 
 	public double getCapacitance() {
@@ -21,6 +22,22 @@ public class Capacitor extends ElectricalElement{
 
 	public void setCapacitance(double capacitance) {
 		this.capacitance = capacitance;
+	}
+	
+	public double getSICapitance() {
+		if (this.getUnit().equals("mF")) {
+			return capacitance*1e-3;
+		}
+		else if (this.getUnit().equals("µF")) {
+			return capacitance*1e-6;
+		}
+		else if (this.getUnit().equals("nF")) {
+			return capacitance*1e-9;
+		}
+		else if (this.getUnit().equals("pF")) {
+			return capacitance*1e-12;
+		}
+		return capacitance;
 	}
 	
 	public String toString() {

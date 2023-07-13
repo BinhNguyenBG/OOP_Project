@@ -1,9 +1,10 @@
 package screen;
 
 import javax.swing.*;
+import javax.swing.event.*;
+
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.geom.*;
 
 public abstract class AddComponent extends JPanel{
@@ -58,6 +59,7 @@ public abstract class AddComponent extends JPanel{
 	private String name;
 	private JTextField parameter = new JTextField();
 	private JComboBox<String> unit = new JComboBox<>();
+	private String previousText="";
 	
 	JPanel createHead(){
 		JPanel head = new JPanel();
@@ -104,6 +106,43 @@ public abstract class AddComponent extends JPanel{
 		center.setLayout(new BoxLayout(center, BoxLayout.X_AXIS));
 		center.add(removeBtn());
 		center.add(parameter);
+		parameter.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				handleTextChange();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				previousText = parameter.getText();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			private void handleTextChange() {
+			    Runnable doHighlight = new Runnable() {
+			        @Override
+			        public void run() {
+						try {
+							double test = Double.parseDouble(parameter.getText());
+						} catch (Exception e) {
+							parameter.setText(previousText);
+						} finally {
+							previousText = parameter.getText();
+						}
+			        }
+			    };       
+			    SwingUtilities.invokeLater(doHighlight);
+			}
+			
+		});
 		center.add(unit);
 		
 		add(center);

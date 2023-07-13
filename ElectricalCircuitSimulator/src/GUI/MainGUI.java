@@ -17,28 +17,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainGUI extends JFrame{
+public class MainGUI extends JPanel{
 	
 	private Circuit circuit;
 		
 	public MainGUI(Circuit circuit) {
 		this.circuit = circuit;
-		
-		Container cp = getContentPane();
-		cp.setLayout(null);
-		
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Handle the closing operation
-        setSize(1400, 800); // Set the size of the frame
-        setTitle("MainGUI");
-        setVisible(true); 
         
 	}
 	
 	
 	@Override
-	public void paint(Graphics g) {
-		super.paint(g);
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		
 		for (ElectricalElement e: circuit.getElements()) {
 			if (e instanceof Resistor) {
@@ -63,23 +54,4 @@ public class MainGUI extends JFrame{
 		}
 	}
 
-	
-	
-
-	public static void main(String[] args) {
-		Inductor i1 = new Inductor(30);
-		Resistor r2 = new Resistor(30);
-		Capacitor c3 = new Capacitor(30);
-		Capacitor c4 = new Capacitor(30);
-		Resistor r5 = new Resistor(30);
-		AC src = new AC(20,20);
-		ParallelCircuit cc = new ParallelCircuit();
-		cc.addElement(i1);
-		cc.addElement(r2);
-		cc.addElement(c3);
-		cc.addElement(c4);
-		cc.addElement(r5);
-		cc.addVoltageSource(src);
-		new MainGUI(cc);
-	}
 }

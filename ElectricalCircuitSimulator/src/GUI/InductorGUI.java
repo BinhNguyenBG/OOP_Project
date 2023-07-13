@@ -2,9 +2,11 @@ package GUI;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.text.DecimalFormat;
 
 import Circuit.Circuit;
 import Circuit.SerialCircuit;
@@ -74,6 +76,16 @@ public class InductorGUI extends ElementGUI{
             	g2d.drawLine(startX_6, startY_6, endX_6, endY_6);
             }
             
+            g2d.setFont(new Font("Arial", Font.BOLD,30));
+            g2d.drawString(inductor.getName(),endX_1 + 55, endY_1-75);
+            Double inductance = this.inductor.getInductance()/1e-6;
+            if (Math.floor(inductance) == Math.round(inductance)) {
+            	g2d.drawString((int) Math.round(inductance)+" μH",endX_1 + 55-25,endY_1-35);
+            } else {
+            	DecimalFormat df = new DecimalFormat("###.#");
+            	g2d.drawString(df.format(inductance) + " μH", endX_1 + 55-25, 210);
+            }     
+            
             
     	} else {
             Graphics2D g2d = (Graphics2D) g;
@@ -116,6 +128,17 @@ public class InductorGUI extends ElementGUI{
             g2d.drawLine(startX_1, startY_1, startX_1-200, startY_1);
             g2d.drawLine(startX_1, startY_5+height+50, startX_1-200, startY_5+height+50);
             
+            // draw String
+            
+            g2d.setFont(new Font("Arial", Font.BOLD,30));
+            g2d.drawString(inductor.getName(), startX_1+ 35, 170);
+            Double inductance = this.inductor.getInductance()/1e-6;
+            if (Math.floor(inductance) == Math.round(inductance)) {
+            	g2d.drawString((int) Math.round(inductance)+" μH",startX_1+ 35, 210);
+            } else {
+            	DecimalFormat df = new DecimalFormat("###.#");
+            	g2d.drawString(df.format(inductance) + " μH", startX_1+ 35, 210);
+            }            
     	}
     }
 }

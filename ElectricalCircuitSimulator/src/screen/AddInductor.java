@@ -13,6 +13,7 @@ public class AddInductor extends AddComponent{
 		this.getUnit().addItem("mH");
 		this.getUnit().addItem("µH");
 		this.getUnit().addItem("nH");
+		this.getUnit().addItem("pH");
 		
 		this.construct();
 	}

@@ -3,12 +3,15 @@ package screen;
 import java.awt.Dimension;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import VoltageSource.AC;
 
 public class AddAC extends AddComponent{
 	private JTextField optparameter = new JTextField();
 	private JComboBox<String> optunit = new JComboBox<>();
+	private String previousText = "";
 	
 	public AddAC() {
 		super();
@@ -30,7 +33,46 @@ public class AddAC extends AddComponent{
 		JPanel optcenter = new JPanel();
 		optcenter.setLayout(new BoxLayout(optcenter, BoxLayout.X_AXIS));
 		optcenter.add(Box.createHorizontalStrut(30));
+		
 		optcenter.add(optparameter);
+		optparameter.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				handleTextChange();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				previousText = optparameter.getText();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			private void handleTextChange() {
+			    Runnable doHighlight = new Runnable() {
+			        @Override
+			        public void run() {
+						try {
+							double test = Double.parseDouble(optparameter.getText());
+						} catch (Exception e) {
+							optparameter.setText(previousText);
+						} finally {
+							previousText = optparameter.getText();
+						}
+			        }
+			    };       
+			    SwingUtilities.invokeLater(doHighlight);
+			}
+			
+		});
+		
 		optunit.addItem("Hz");
 		optunit.addItem("kHz");
 		optunit.addItem("MHz");
@@ -51,5 +93,9 @@ public class AddAC extends AddComponent{
 	
 	public double getMoreDoubleParameter() {
 		return Double.parseDouble(optparameter.getText());
+	}
+
+	public JComboBox<String> getOptunit() {
+		return optunit;
 	}
 }

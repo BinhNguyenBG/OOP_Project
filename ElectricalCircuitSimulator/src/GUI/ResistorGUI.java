@@ -77,6 +77,11 @@ public class ResistorGUI extends ElementGUI{
             	int endY_9 = endY_8+200;
             	g2d.drawLine(endX_8, endY_8, endX_9, endY_9);
             }
+			// Draw String:
+            g2d.setFont(new Font("Arial", Font.BOLD,30));
+            g2d.drawString(this.resistor.getName(), endX_1 + 55, endY_1-85);
+            g2d.drawString((int)this.resistor.getResistance().getReal()+" Ω", endX_1 + 45, endY_1-50);
+			
     	} else {
     		//super.paint(g);
             Graphics2D g2d = (Graphics2D) g;
@@ -121,6 +126,13 @@ public class ResistorGUI extends ElementGUI{
             
             g2d.drawLine(startX_1, startY_1, startX_1-200, startY_1);
             g2d.drawLine(endX_8, endY_8, endX_8-200, endY_8);
+            
+            
+            
+            // Draw String:
+            g2d.setFont(new Font("Arial", Font.BOLD,30));
+            g2d.drawString(this.resistor.getName(), endX_2 + 20, 170);
+            g2d.drawString((int)this.resistor.getResistance().getReal()+" Ω", endX_2 + 20, 210);
     	}
     }
     

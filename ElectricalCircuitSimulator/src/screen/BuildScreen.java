@@ -44,23 +44,41 @@ public class BuildScreen extends JFrame{
 				
 				for (AddComponent addcomp: addcomponents) {
 					if (addcomp instanceof AddAC) {
-						circuit.addVoltageSource(new AC(addcomp.getDoubleParameter(), ((AddAC)addcomp).getMoreDoubleParameter()));
+						double voltage = addcomp.getDoubleParameter();
+						String volunit = (String)addcomp.getUnit().getSelectedItem();
+						
+						double frequency = ((AddAC)addcomp).getMoreDoubleParameter();
+						String frequnit = (String)((AddAC)addcomp).getOptunit().getSelectedItem();
+						
+						circuit.addVoltageSource(new AC(voltage, volunit, frequency, frequnit));
 					}
 					else if (addcomp instanceof AddDC) {
-						circuit.addVoltageSource(new DC(addcomp.getDoubleParameter()));
+						double voltage = addcomp.getDoubleParameter();
+						String volunit = (String)addcomp.getUnit().getSelectedItem();
+						
+						circuit.addVoltageSource(new DC(voltage, volunit));
 					}
 					else if (addcomp instanceof AddResistor) {
-						Resistor resistor = new Resistor(addcomp.getDoubleParameter());
+						double resistance = addcomp.getDoubleParameter();
+						String unit = (String)addcomp.getUnit().getSelectedItem();
+						
+						Resistor resistor = new Resistor(resistance, unit);
 						resistor.setName(addcomp.getName());
 						circuit.addElement(resistor);
 					}
 					else if (addcomp instanceof AddCapacitor) {
-						Capacitor capacitor = new Capacitor(addcomp.getDoubleParameter());
+						double capacitance = addcomp.getDoubleParameter();
+						String unit = (String)addcomp.getUnit().getSelectedItem();
+						
+						Capacitor capacitor = new Capacitor(capacitance, unit);
 						capacitor.setName(addcomp.getName());
 						circuit.addElement(capacitor);
 					}
 					else {
-						Inductor inductor = new Inductor(addcomp.getDoubleParameter());
+						double inductance = addcomp.getDoubleParameter();
+						String unit = (String)addcomp.getUnit().getSelectedItem();
+						
+						Inductor inductor = new Inductor(inductance, unit);
 						inductor.setName(addcomp.getName());
 						circuit.addElement(inductor);
 					}
@@ -98,6 +116,8 @@ public class BuildScreen extends JFrame{
 		JPanel addSource = new JPanel();
 		addSource.setLayout(new BoxLayout(addSource, BoxLayout.Y_AXIS));
 		source.add(addSource);
+		
+		source.add(Box.createVerticalStrut(120));
 		
 		JPanel addSourceBtnPane = new JPanel();
 		JComboBox<String> sourceOption = new JComboBox<>(new String[] {"AC", "DC"});
@@ -294,6 +314,12 @@ public class BuildScreen extends JFrame{
 	}
 	
 	JPanel createParallel() {
+		circuit = new ParallelCircuit();
+		addcomponents = new ArrayList();
+		nbSource = 0;
+		nbElements = 0;
+		AddComponent.index = 0;
+		
 		JPanel parallel = new JPanel();
 		parallel.setLayout(new BorderLayout());
 		parallel.add(createCenter(), BorderLayout.CENTER);
@@ -301,7 +327,13 @@ public class BuildScreen extends JFrame{
 		return parallel;
 	}
 	
-	JPanel createSeries() {
+	JPanel createSerial() {
+		circuit = new SerialCircuit();
+		addcomponents = new ArrayList();
+		nbSource = 0;
+		nbElements = 0;
+		AddComponent.index = 0;
+		
 		JPanel series = new JPanel();
 		series.setLayout(new BorderLayout());
 		series.add(createCenter(), BorderLayout.CENTER);
@@ -312,20 +344,23 @@ public class BuildScreen extends JFrame{
 	JTabbedPane createTabbedPane(){
 		JTabbedPane tabpane = new JTabbedPane();
 		tabpane.addTab("Parallel Circuit", createParallel());
-		tabpane.addTab("Serial Circuit", createSeries());
+		tabpane.addTab("Serial Circuit", createSerial());
 		tabpane.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				String title = tabpane.getTitleAt(tabpane.getSelectedIndex());
 				if (title.equals("Parallel Circuit")) {
+					tabpane.setComponentAt(0, createParallel());
 					circuit = new ParallelCircuit();
 				} else if (title.equals("Serial Circuit")) {
+					tabpane.setComponentAt(1, createSerial());
 					circuit = new SerialCircuit();
 				}
 			}			
 		});
 		return tabpane;
 	}
+	
 	public BuildScreen() {
 		Container cp = getContentPane();
 		cp.add(createTabbedPane());
